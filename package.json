@@ -1,0 +1,11 @@
+{
+  "name": "nodejs-github-app",
+  "version": "1.0.0",
+  "description": "Module 9 Exercise 3A - Jenkins + GitHub + ECR",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Andrew",
+  "license": "MIT"
+}
