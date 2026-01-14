@@ -18,10 +18,10 @@ build-and-push:
     - docker info
   script:
     - echo "=== Building Docker Image ==="
-    - docker build -t $IMAGE_NAME:$CI_PIPELINE_IID .
-    - docker tag $IMAGE_NAME:$CI_PIPELINE_IID $ECR_REGISTRY/$ECR_REPOSITORY:$CI_PIPELINE_IID
-    - docker tag $IMAGE_NAME:$CI_PIPELINE_IID $ECR_REGISTRY/$ECR_REPOSITORY:latest
+    - docker build -t ${IMAGE_NAME}:${CI_PIPELINE_IID} .
+    - docker tag ${IMAGE_NAME}:${CI_PIPELINE_IID} ${ECR_REGISTRY}/${ECR_REPOSITORY}:${CI_PIPELINE_IID}
+    - docker tag ${IMAGE_NAME}:${CI_PIPELINE_IID} ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest
     - echo "=== Docker Images Built ==="
-    - docker images | grep $IMAGE_NAME || true
-    - echo "✅ Build completed successfully!"
-    - echo "Image built: $IMAGE_NAME:$CI_PIPELINE_IID"
+    - docker images | grep ${IMAGE_NAME} || true
+    - echo "Build completed successfully!"
+    - echo "Image built - ${IMAGE_NAME}:${CI_PIPELINE_IID}"
