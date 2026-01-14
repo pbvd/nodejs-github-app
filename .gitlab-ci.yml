@@ -1,0 +1,26 @@
+stages:
+  - build
+
+variables:
+  ECR_REGISTRY: "000000000000.dkr.ecr.eu-central-1.localhost.localstack.cloud:4566"
+  ECR_REPOSITORY: "bootcamp/nodejs-app"
+  IMAGE_NAME: "nodejs-gitlab-app"
+
+build-and-push:
+  stage: build
+  image: docker:24
+  services:
+    - docker:24-dind
+  before_script:
+    - echo "=== Starting GitLab CI/CD Build ==="
+  script:
+    - echo "=== Building Docker Image ==="
+    - docker build -t $IMAGE_NAME:$CI_PIPELINE_IID .
+    - docker tag $IMAGE_NAME:$CI_PIPELINE_IID $ECR_REGISTRY/$ECR_REPOSITORY:$CI_PIPELINE_IID
+    - docker tag $IMAGE_NAME:$CI_PIPELINE_IID $ECR_REGISTRY/$ECR_REPOSITORY:latest
+    - echo "=== Docker Images Built ==="
+    - docker images | grep $IMAGE_NAME
+    - echo "✅ Build completed successfully!"
+    - echo "Image: $IMAGE_NAME:$CI_PIPELINE_IID"
+    - echo "Tagged for ECR: $ECR_REGISTRY/$ECR_REPOSITORY:$CI_PIPELINE_IID"
+    - echo "Tagged for ECR: $ECR_REGISTRY/$ECR_REPOSITORY:latest"
